@@ -1,0 +1,13 @@
+{
+  "name": "flask-dynamic-selectfields",
+  "version": "1.0.0",
+  "description": "Dynamic selectfield in flask use wtforms and jquery",
+  "main": "index.js",
+  "repository": "https://github.com/ombak/flask-dynamic-selectfields.git",
+  "author": "Sukma Wijaya Saputra <coklatpanas83@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bulma": "^0.7.5",
+    "jquery": "^3.4.1"
+  }
+}
