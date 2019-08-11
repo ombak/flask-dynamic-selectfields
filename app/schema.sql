@@ -16,5 +16,5 @@ CREATE TABLE model (
 CREATE TABLE versions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     model_id INTEGER NOT NULL,
-    varsions TEXT NOT NULL
+    versions TEXT NOT NULL
 );

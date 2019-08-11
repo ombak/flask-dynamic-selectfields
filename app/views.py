@@ -1,20 +1,14 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify, request
 from .form import DropdownForm
-from .db import get_db
+from .models import Car, Model, Version
+
 
 bp = Blueprint('main', __name__)
 
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
-    db = get_db()
     form = DropdownForm()
-    
-    cars = db.execute('SELECT id, name FROM car').fetchall()
-    form.car.choices = [(c['id'], c['name']) for c in cars]
-
-    models = db.execute('SELECT id, model FROM model WHERE car_id = ?', (1, )).fetchall()
-    form.model.choices = [(m['id'], m['model']) for m in models]    
-    
-
+    car = form.car.choices = [(c.id, c.name) for c in Car.query.all()]
+    model = form.model.choices = [(0, '--choose model--')]
     return render_template('form.html', form=form)
