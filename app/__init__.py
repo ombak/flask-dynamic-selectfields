@@ -4,7 +4,6 @@ from flask import Flask, render_template
 
 from .command import init_app
 from .database import init_db, db_session
-from .form import DropdownForm
 from .views import bp
 
 

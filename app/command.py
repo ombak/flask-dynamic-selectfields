@@ -13,10 +13,7 @@ def init_db_command():
     click.echo('Initialized the database.')
 
 
-# populate database
-@click.command('pop-db')
-@with_appcontext
-def populate_db_command():
+def populate_car():
     cars = [Car('Aston Martin'), 
         Car('Audi'),
         Car('BMW'),
@@ -27,6 +24,36 @@ def populate_db_command():
         Car('Ford')]
     db_session.add_all(cars)
     db_session.commit()
+
+def get_cars(id):
+    return Car.query.get(id)
+
+def populate_model():
+    models = [Model(get_cars(1), 'DB5'),
+        Model(get_cars(1), 'Rapide'),
+        Model(get_cars(1), 'Lagonda'),
+        Model(get_cars(1), 'V8 Vantage'),
+        Model(get_cars(1), 'DBS'),
+        Model(get_cars(2), 'Audi 50'),
+        Model(get_cars(2), 'Audi F103'),
+        Model(get_cars(2), 'Audi 80'),
+        Model(get_cars(2), 'Audi 90'),
+        Model(get_cars(2), 'Audi 100'),
+        Model(get_cars(2), 'Audi 200'),
+        Model(get_cars(3), 'BMW F650GS'),
+        Model(get_cars(3), 'BMW F800GS'),
+        Model(get_cars(3), 'BMW F800R'),
+        Model(get_cars(3), 'BMW G450X'),
+        Model(get_cars(3), 'BMW R1200GR')]
+    db_session.add_all(models)
+    db_session.commit()
+
+# populate database
+@click.command('pop-db')
+@with_appcontext
+def populate_db_command():
+    populate_car()
+    populate_model()
     click.echo('Populate database.')
 
 # 
