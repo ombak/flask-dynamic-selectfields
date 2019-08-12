@@ -48,12 +48,29 @@ def populate_model():
     db_session.add_all(models)
     db_session.commit()
 
+def get_models(id):
+    return Model.query.get(id)
+
+def populate_version():
+    versions = [Version(get_models(1), 'DB5 Vantage'),
+        Version(get_models(1), 'DB5 convertible'),
+        Version(get_models(1), 'DB5 shooting-brake'),
+        Version(get_models(2), 'Rapide S 2013'),
+        Version(get_models(2), 'RapideE'),
+        Version(get_models(2), 'Rapide AMR'),
+        Version(get_models(3), 'Series 1 1974-1975'),
+        Version(get_models(3), 'Series 2 1976-1985'),
+        Version(get_models(6), 'Typ 86')]
+    db_session.add_all(versions)
+    db_session.commit()
+
 # populate database
 @click.command('pop-db')
 @with_appcontext
 def populate_db_command():
     populate_car()
     populate_model()
+    populate_version()
     click.echo('Populate database.')
 
 # 
