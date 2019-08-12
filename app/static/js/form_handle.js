@@ -12,7 +12,7 @@ $(function() {
         type: 'GET',
         url: $SCRIPT_ROOT + '/_load_cars',
         success: (results) => {
-            if (results.status) {
+            if (results.success) {
                 $.each(results.data, (i, item) => {
                     car_ddl.append($('<option></option>').attr('value', item.id).text(item.name));
                 });
@@ -44,7 +44,7 @@ function populate_model(car_id) {
             'car_id': car_id
         },
         success: (results) => {
-            if (results.status) {
+            if (results.success) {
                 $.each(results.data, (i, item) => {
                     model_ddl.append($('<option></option>').attr('value', item.id).text(item.model));
                 });
@@ -66,7 +66,7 @@ function populate_version(model_id) {
             model_id: model_id
         },
         success: (results) => {
-            if (results.status) {
+            if (results.success) {
                 $.each(results.data, (i, item) => {
                     version_ddl.append($('<option></option>').attr('value', item.id).text(item.version));
                 });
