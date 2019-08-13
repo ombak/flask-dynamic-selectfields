@@ -45,20 +45,15 @@
             <table id="tbl-orders" class="display">
                 <thead>
                     <tr>
-                        <th>Col 1</th>
-                        <th>Col 2</th>
+                        <th>id</th>
+                        <th>Car</th>
+                        <th>Model</th>
+                        <th>Version</th>
+                        <th>Customer Name</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Col 1</td>
-                        <td>Col 1</td>
-                    </tr>
-                    <tr>
-                        <td>Col 1</td>
-                        <td>Col 1</td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
+                <tfoot></tfoot>
             </table>
         </section>
     </div>
@@ -69,7 +64,19 @@
 <script type="text/javascript" src="{{ url_for('static', filename='vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
 <script>
     $(document).ready( function () {
-        $('#tbl-orders').DataTable();
+        $('#tbl-orders').DataTable({
+            ajax: {
+                url: $SCRIPT_ROOT + "/_populate_table",
+                dataSrc: "data"
+            },
+            columns: [
+                {data:'id'},
+                {data:'car'},
+                {data:'model'},
+                {data:'version'},
+                {data:'customer_name'}
+            ]
+        });
     });
 </script>
 {% endblock %}

@@ -67,3 +67,8 @@ def save_orders():
             return jsonify(success=True)
         except:
             return jsonify(success=False)
+
+@bp.route('/_populate_table', methods=['GET'])
+def populate_table():
+    orders = Order.query.all()
+    return jsonify(data=[o.serializable for o in orders])

@@ -40,7 +40,9 @@ class Model(Base):
     
     @property
     def serializable(self):
-        return {'id':self.id, 'car_id':self.car_id, 'model':self.model}
+        return {'id':self.id, 
+                'car_id':self.car_id, 
+                'model':self.model}
 
 
 class Version(Base):
@@ -76,7 +78,7 @@ class Order(Base):
     models = relationship("Model", back_populates="orders")
     versions = relationship("Version", back_populates="orders")
 
-    def __init__(self, cars, models, versions, customer_name):
+    def __init__(self, cars=None, models=None, versions=None, customer_name=None):
         self.cars = cars
         self.models = models
         self.versions = versions
@@ -85,9 +87,10 @@ class Order(Base):
     def __repr__(self):
         return '<Order %r>' % self.customer_name
     
+    @property
     def serializable(self):
-        return {'id':self.id, 
-                'car_id':self.car_id, 
-                'model_id':self.model_id, 
-                'version_id':self.version_id, 
+        return {'id':self.id,
+                'car':self.cars.name,
+                'model':self.models.model,
+                'version':self.versions.version,
                 'customer_name':self.customer_name}
