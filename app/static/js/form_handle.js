@@ -1,7 +1,7 @@
 $(function() {
     // populate ddl car
-    var car_ddl = $('#car');
-    var model_ddl =  $('#model');
+    var car_ddl = $('#cars');
+    var model_ddl =  $('#models');
     var car_id;
 
     car_ddl.empty();
@@ -14,7 +14,7 @@ $(function() {
         success: (results) => {
             if (results.success) {
                 $.each(results.data, (i, item) => {
-                    car_ddl.append($('<option></option>').attr('value', item.id).text(item.name));
+                    car_ddl.append($('<option></option>').attr('value', item.id).text(item.car));
                 });
             }
         }
@@ -34,7 +34,7 @@ $(function() {
 });
 
 function populate_model(car_id) {
-    var model_ddl = $('#model');
+    var model_ddl = $('#models');
     model_ddl.empty();
     model_ddl.append('<option value="">--choose model--</option>')
     $.ajax({
@@ -56,7 +56,7 @@ function populate_model(car_id) {
 }
 
 function populate_version(model_id) {
-    var version_ddl = $('#version');
+    var version_ddl = $('#versions');
     version_ddl.empty();
     version_ddl.append('<option value="">--choose version--</option>')
     $.ajax({

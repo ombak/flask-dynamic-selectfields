@@ -7,19 +7,19 @@ from .database import Base
 class Car(Base):
     __tablename__ = 'cars'
     id = Column(Integer, primary_key=True)
-    name = Column(String(128), nullable=False)
+    car = Column(String(128), nullable=False)
     models = relationship("Model", back_populates="cars") # relationship
     orders = relationship("Order", back_populates="cars")
 
-    def __init__(self, name=None):
-        self.name = name
+    def __init__(self, car=None):
+        self.car = car
 
     def __repr__(self):
-        return '<Car %r>' % self.name
+        return '<Car %r>' % self.car
 
     @property 
     def serializable(self):
-        return {'id':self.id, 'name':self.name}
+        return {'id':self.id, 'car':self.car}
     
     
 class Model(Base):
@@ -90,7 +90,7 @@ class Order(Base):
     @property
     def serializable(self):
         return {'id':self.id,
-                'car':self.cars.name,
+                'car':self.cars.car,
                 'model':self.models.model,
                 'version':self.versions.version,
                 'customer_name':self.customer_name}

@@ -60,7 +60,9 @@ def populate_version():
         Version(get_models(2), 'Rapide AMR'),
         Version(get_models(3), 'Series 1 1974-1975'),
         Version(get_models(3), 'Series 2 1976-1985'),
-        Version(get_models(6), 'Typ 86')]
+        Version(get_models(6), 'Typ 86'),
+        Version(get_models(12), '2008-2016')]
+        
     db_session.add_all(versions)
     db_session.commit()
 

@@ -16,6 +16,16 @@ def add_orders():
     form = OrderForm()
     return render_template('add_order.html', title="Add Orders", form=form)
 
+@bp.route('/edit_orders/<int:obj_id>/edit', methods=['GET'])
+def edit_orders(obj_id):
+    orders = Order.query.get(obj_id)
+    form = OrderForm(obj=orders)
+    form.cars.choices = [(c.id, c.car) for c in Car.query.order_by('id')]
+    form.models.choices = [(m.id, m.model) for m in Model.query.filter(Model.car_id == orders.cars.id).all()]
+    form.versions.choices = [(v.id, v.version) for v in Version.query.filter(Version.model_id == orders.models.id).all()]
+    
+    return render_template('edit_order.html', title="Edit Orders", form=form)
+
 
 """load ajax
 """
@@ -49,18 +59,18 @@ def load_versions():
 def save_orders():
     form = OrderForm()
     # add value to form for form validate
-    form.car.choices = [(form.data.get('car'), '')]
-    form.model.choices = [(form.data.get('model'), '')]
-    form.version.choices = [(form.data.get('version'), '')]
-    form.customer.data = form.data.get('customer')
+    form.cars.choices = [(form.data.get('cars'), '')]
+    form.models.choices = [(form.data.get('models'), '')]
+    form.versions.choices = [(form.data.get('versions'), '')]
+    form.customer_name.data = form.data.get('customer_name')
 
     if request.method == 'POST' and form.validate():
         try:
             orders = Order(
-                cars=Car.query.get(form.data.get('car')),
-                models=Model.query.get(form.data.get('model')),
-                versions=Version.query.get(form.data.get('version')),
-                customer_name=form.data.get('customer')
+                cars=Car.query.get(form.data.get('cars')),
+                models=Model.query.get(form.data.get('models')),
+                versions=Version.query.get(form.data.get('versions')),
+                customer_name=form.data.get('customer_name')
             )
             db_session.add(orders)
             db_session.commit()

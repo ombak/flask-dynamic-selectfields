@@ -45,11 +45,11 @@
             <table id="tbl-orders" class="display">
                 <thead>
                     <tr>
-                        <th>id</th>
                         <th>Car</th>
                         <th>Model</th>
                         <th>Version</th>
                         <th>Customer Name</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -65,16 +65,22 @@
 <script>
     $(document).ready( function () {
         $('#tbl-orders').DataTable({
-            ajax: {
+            "ajax": {
                 url: $SCRIPT_ROOT + "/_populate_table",
                 dataSrc: "data"
             },
-            columns: [
-                {data:'id'},
-                {data:'car'},
-                {data:'model'},
-                {data:'version'},
-                {data:'customer_name'}
+            "columns": [
+                {"data":"car"},
+                {"data":"model"},
+                {"data":"version"},
+                {"data":"customer_name"},
+                {
+                    "data":"id",
+                    "render": function (data, type, row, meta) {
+                        data = '<a href="/edit_orders/'+ data +'/edit">Edit</a>';
+                        return data;
+                    }
+                },
             ]
         });
     });
