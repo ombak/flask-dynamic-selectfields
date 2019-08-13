@@ -16,13 +16,7 @@ Install [yarn pkg](https://yarnpkg.com/en/) and install some pakage.
 
 ```
 yarn add bulma
-```
-
-```
 yarn add jquery
-```
-
-```
 yarn add datatables
 ```
 
