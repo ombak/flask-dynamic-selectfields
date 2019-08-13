@@ -8,11 +8,11 @@ Create your virtualenv and install file requirements.txt
 pip install -r requirements.txt
 ```
 
-Install [yarn pkg] (https://yarnpkg.com/en/) and install some pakage.
+Install [yarn pkg](https://yarnpkg.com/en/) and install some pakage.
 
-* [Bulma] (https://bulma.io/) 
-* [jQuery] (https://jquery.com/)
-* [dataTables] (https://datatables.net/)
+* [Bulma](https://bulma.io/) 
+* [jQuery](https://jquery.com/)
+* [dataTables](https://datatables.net/)
 
 ```
 yarn add bulma
