@@ -45,7 +45,7 @@ flask run
 
 ## Authors
 
-* **Sukma Wijaya Saputra** - *Initial work* - [PurpleBooth](https://github.com/ombak)
+* **Sukma Wijaya Saputra** - *Initial work* - [ombak](https://github.com/ombak)
 
 
 ## License
