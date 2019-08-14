@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, jsonify, request, jsonify
-from .forms import OrderForm
+from .forms import OrderForm, OrderEditForm
 from .database import db_session
 from .models import Car, Model, Version, Order
 
@@ -19,11 +19,12 @@ def add_orders():
 @bp.route('/edit_orders/<int:obj_id>/edit', methods=['GET'])
 def edit_orders(obj_id):
     orders = Order.query.get(obj_id)
-    form = OrderForm()
+    form = OrderEditForm()
     form.car.choices = [(c.id, c.car) for c in Car.query.all()]
     form.model.choices = [(m.id, m.model) for m in Model.query.filter(Model.car_id == orders.cars.id).all()]
     form.version.choices = [(v.id, v.version) for v in Version.query.filter(Version.model_id == orders.models.id).all()]
     
+    form.id.default = orders.id
     form.car.default = orders.cars.id
     form.model.default = orders.models.id
     form.version.default = orders.versions.id
@@ -72,13 +73,36 @@ def save_orders():
 
     if request.method == 'POST' and form.validate():
         try:
-            orders = Order(
+            order = Order(
                 cars=Car.query.get(form.data.get('car')),
                 models=Model.query.get(form.data.get('model')),
                 versions=Version.query.get(form.data.get('version')),
                 customer_name=form.data.get('customer_name')
             )
-            db_session.add(orders)
+            db_session.add(order)
+            db_session.commit()
+            return jsonify(success=True)
+        except:
+            return jsonify(success=False)
+
+@bp.route('/_update_orders', methods=['POST'])
+def update_orders():
+    form = OrderEditForm()
+    form.car.choices = [(form.data.get('car'), '')]
+    form.model.choices = [(form.data.get('model'), '')]
+    form.version.choices = [(form.data.get('version'), '')]
+    form.customer_name.data = form.data.get('customer_name')
+    
+    if request.method == 'POST' and form.validate():
+        try:
+            id = form.data.get('id')
+            order = Order.query.get(id)
+            order.cars=Car.query.get(form.data.get('car'))
+            order.models=Model.query.get(form.data.get('model'))
+            order.versions=Version.query.get(form.data.get('version'))
+            order.customer_name=form.data.get('customer_name')
+        
+            db_session.add(order)
             db_session.commit()
             return jsonify(success=True)
         except:

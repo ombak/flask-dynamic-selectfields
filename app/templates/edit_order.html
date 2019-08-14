@@ -40,6 +40,7 @@
 
             <form id="form-orders" name="form-orders">
                 {{ form.csrf_token }}
+                {{ form.id }}
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         {{ form.car.label(class="label") }}
@@ -146,7 +147,7 @@
         $('#form-orders').submit(function (e) {
             $.ajax({
                 type: 'POST',
-                url: $SCRIPT_ROOT + '/_save_orders',
+                url: $SCRIPT_ROOT + '/_update_orders',
                 data: $(this).serialize(),
                 success: (results) => {
                     if (results.success) {
