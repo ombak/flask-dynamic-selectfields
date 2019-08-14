@@ -25,7 +25,7 @@ $(function() {
         car_id = $(this).children('option:selected').val();
         populate_model(car_id);
     });
-
+    
     // change ddl model effect to populate ddl version
     model_ddl.bind('change', function() {
         model_id = $(this).children('option:selected').val();

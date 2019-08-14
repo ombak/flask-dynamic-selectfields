@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, jsonify, request, jsonify
-from .form import OrderForm
+from .forms import OrderForm
 from .database import db_session
 from .models import Car, Model, Version, Order
 
@@ -20,10 +20,16 @@ def add_orders():
 def edit_orders(obj_id):
     orders = Order.query.get(obj_id)
     form = OrderForm(obj=orders)
-    form.cars.choices = [(c.id, c.car) for c in Car.query.order_by('id')]
-    form.models.choices = [(m.id, m.model) for m in Model.query.filter(Model.car_id == orders.cars.id).all()]
-    form.versions.choices = [(v.id, v.version) for v in Version.query.filter(Version.model_id == orders.models.id).all()]
+    form.car.choices = [(c.id, c.car) for c in Car.query.all()]
+    form.model.choices = [(m.id, m.model) for m in Model.query.filter(Model.car_id == orders.cars.id).all()]
+    form.version.choices = [(v.id, v.version) for v in Version.query.filter(Version.model_id == orders.models.id).all()]
     
+    form.car.default = orders.cars.id
+    form.model.default = orders.models.id
+    form.version.default = orders.versions.id
+    form.customer_name.default = orders.customer_name
+    form.process()
+
     return render_template('edit_order.html', title="Edit Orders", form=form)
 
 
@@ -39,7 +45,7 @@ def load_cars():
 
 @bp.route('/_load_models', methods=['GET'])
 def load_models():
-    car_id = request.args.get('car_id', 0, type=int)
+    car_id = request.args.get('id', 0, type=int)
     try:
         models = Model.query.filter(Model.car_id == car_id).all()
         return jsonify(success=True, data=[m.serializable for m in models])
@@ -48,7 +54,7 @@ def load_models():
 
 @bp.route('/_load_versions', methods=['GET'])
 def load_versions():
-    model_id = request.args.get('model_id', 0, type=int)
+    model_id = request.args.get('id', 0, type=int)
     try:
         versions = Version.query.filter(Version.model_id == model_id).all()
         return jsonify(success=True, data=[v.serializable for v in versions])
@@ -59,17 +65,17 @@ def load_versions():
 def save_orders():
     form = OrderForm()
     # add value to form for form validate
-    form.cars.choices = [(form.data.get('cars'), '')]
-    form.models.choices = [(form.data.get('models'), '')]
-    form.versions.choices = [(form.data.get('versions'), '')]
+    form.car.choices = [(form.data.get('car'), '')]
+    form.model.choices = [(form.data.get('model'), '')]
+    form.version.choices = [(form.data.get('version'), '')]
     form.customer_name.data = form.data.get('customer_name')
 
     if request.method == 'POST' and form.validate():
         try:
             orders = Order(
-                cars=Car.query.get(form.data.get('cars')),
-                models=Model.query.get(form.data.get('models')),
-                versions=Version.query.get(form.data.get('versions')),
+                cars=Car.query.get(form.data.get('car')),
+                models=Model.query.get(form.data.get('model')),
+                versions=Version.query.get(form.data.get('version')),
                 customer_name=form.data.get('customer_name')
             )
             db_session.add(orders)

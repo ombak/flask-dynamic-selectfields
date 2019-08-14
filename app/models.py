@@ -74,7 +74,7 @@ class Order(Base):
     model_id = Column(Integer, ForeignKey('models.id'), nullable=False)
     version_id = Column(Integer, ForeignKey('versions.id'), nullable=False)
     customer_name = Column(String(128), nullable=False)
-    cars = relationship("Car", back_populates="orders")
+    cars = relationship("Car", back_populates="orders") # relationship
     models = relationship("Model", back_populates="orders")
     versions = relationship("Version", back_populates="orders")
 

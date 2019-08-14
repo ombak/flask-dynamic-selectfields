@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
 
 {% block title %}{{ page }}{% endblock %}
@@ -23,7 +22,7 @@
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="{{ url_for('main.index') }}">Orders</a></li>
-                    <li class="is-active"><a href="#" aria-current="page">Add Order</a></li>
+                    <li class="is-active"><a href="#" aria-current="page">Edit Order</a></li>
                 </ul>
             </nav>
             
@@ -31,7 +30,7 @@
                 <!-- Left side -->
                 <div class="level-left">
                     <div class="level-item">
-                        <p class="subtitle is-5">Add Order</p>
+                        <p class="subtitle is-5">Edit Order</p>
                     </div>
                 </div>
                 <!-- Right side -->
@@ -43,13 +42,13 @@
                 {{ form.csrf_token }}
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        {{ form.cars.label(class="label") }}
+                        {{ form.car.label(class="label") }}
                     </div>
                     <div class="field-body">
                         <div class="field is-narrow">
                             <div class="control">
                                 <div class="select is-fullwidth">
-                                    {{ form.cars() }}
+                                    {{ form.car() }}
                                 </div>
                             </div>
                         </div>
@@ -57,13 +56,13 @@
                 </div>
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        {{ form.models.label(class="label") }}
+                        {{ form.model.label(class="label") }}
                     </div>
                     <div class="field-body">
                         <div class="field is-narrow">
                             <div class="control">
                                 <div class="select is-fullwidth">
-                                    {{ form.models() }}
+                                    {{ form.model() }}
                                 </div>
                             </div>
                         </div>
@@ -71,13 +70,13 @@
                 </div>
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        {{ form.versions.label(class="label") }}
+                        {{ form.version.label(class="label") }}
                     </div>
                     <div class="field-body">
                         <div class="field is-narrow">
                             <div class="control">
                                 <div class="select is-fullwidth">
-                                    {{ form.versions() }}
+                                    {{ form.version() }}
                                 </div>
                             </div>
                         </div>
@@ -121,6 +120,13 @@
 
 {% block end_script %}
 <script>
-    
+    $(function() {
+        var ddl_car = $('#car');
+        var ddl_model = $('#model');
+        var ddl_version = $('#version');
+        
+        // $WS.populates(ddl_car);
+
+    });
 </script>
 {% endblock %}
