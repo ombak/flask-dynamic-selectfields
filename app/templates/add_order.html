@@ -124,6 +124,8 @@
         var ddl_car = $('#car');
         var ddl_model = $('#model');
         var ddl_version = $('#version');
+        var car_id;
+        var model_id;
 
         // populate ddl car
         $WS.populates(ddl_car);
@@ -131,7 +133,9 @@
         // change ddl car result to populate ddl model 
         ddl_car.bind('change', function() {
             car_id = $(this).children('option:selected').val();
+            model_id = 0;
             $WS.populate_by(ddl_model, car_id);
+            $WS.populate_by(ddl_version, model_id);
         });
         
         // change ddl model result to populate ddl version

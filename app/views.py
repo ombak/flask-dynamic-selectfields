@@ -19,7 +19,7 @@ def add_orders():
 @bp.route('/edit_orders/<int:obj_id>/edit', methods=['GET'])
 def edit_orders(obj_id):
     orders = Order.query.get(obj_id)
-    form = OrderForm(obj=orders)
+    form = OrderForm()
     form.car.choices = [(c.id, c.car) for c in Car.query.all()]
     form.model.choices = [(m.id, m.model) for m in Model.query.filter(Model.car_id == orders.cars.id).all()]
     form.version.choices = [(v.id, v.version) for v in Version.query.filter(Version.model_id == orders.models.id).all()]

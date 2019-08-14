@@ -124,9 +124,38 @@
         var ddl_car = $('#car');
         var ddl_model = $('#model');
         var ddl_version = $('#version');
-        
-        // $WS.populates(ddl_car);
+        var car_id;
+        var model_id;
 
+        // $WS.populates(ddl_car);
+        // change ddl car result to populate ddl model 
+        ddl_car.bind('change', function() {
+            car_id = $(this).children('option:selected').val();
+            model_id = 0;
+            $WS.populate_by(ddl_model, car_id);
+            $WS.populate_by(ddl_version, model_id);
+        });
+        
+        // change ddl model result to populate ddl version
+        ddl_model.bind('change', function() {
+            model_id = $(this).children('option:selected').val();
+            $WS.populate_by(ddl_version, model_id);
+        });
+
+        // submit form
+        $('#form-orders').submit(function (e) {
+            $.ajax({
+                type: 'POST',
+                url: $SCRIPT_ROOT + '/_save_orders',
+                data: $(this).serialize(),
+                success: (results) => {
+                    if (results.success) {
+                        console.log('success');
+                    }
+                }
+            });
+            e.preventDefault();
+        });
     });
 </script>
 {% endblock %}
