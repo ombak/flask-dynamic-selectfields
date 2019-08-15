@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, render_template, jsonify, request, jsonify
+from flask import Blueprint, render_template, jsonify, request, url_for
 from .forms import OrderForm, OrderEditForm
 from .database import db_session
 from .models import Car, Model, Version, Order
@@ -77,14 +77,16 @@ def save_orders():
                 cars=Car.query.get(form.data.get('car')),
                 models=Model.query.get(form.data.get('model')),
                 versions=Version.query.get(form.data.get('version')),
-                customer_name=form.data.get('customer_name')
-            )
+                customer_name=form.data.get('customer_name'))
             db_session.add(order)
             db_session.commit()
             
-            return jsonify(success=True)
+            return jsonify(
+                        success=True, 
+                        messages=[u'Submited successfully'],
+                        next=url_for('main.index'))
         except:
-            return jsonify(success=False)
+            return jsonify(success=False, errors=True, messages=form.errors)
 
 @bp.route('/_update_orders', methods=['POST'])
 def update_orders():
@@ -105,9 +107,12 @@ def update_orders():
         
             db_session.add(order)
             db_session.commit()
-            return jsonify(success=True)
+            return jsonify(
+                        success=True,
+                        messages=[u'Updated successfully'],
+                        next=url_for('main.index'))
         except:
-            return jsonify(success=False)
+            return jsonify(success=False, errors=True, messages=form.errors)
 
 @bp.route('/_populate_table', methods=['GET'])
 def populate_table():

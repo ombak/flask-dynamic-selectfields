@@ -99,8 +99,15 @@ $(function() {
                 },
                 success: function(results) {
                     if (results.success) {
-                        // show notification
-                        $WS.flash_message('Sukma Saputra', 'primary');
+                        if (results.messages) {
+                            $WS.flash_message(results.messages, 'primary');
+                        }
+
+                        if (results.next) {
+                            setTimeout(function() {
+                                document.location = results.next;
+                            }, 2000);
+                        }
                     }
                 },
                 complete: function() {
