@@ -10,6 +10,8 @@ pip install -r requirements.txt
 
 Install [yarn pkg](https://yarnpkg.com/en/) and install some pakage.
 
+Before run yarn add, create directory /app/static/vendor
+
 * [Bulma](https://bulma.io/) 
 * [jQuery](https://jquery.com/)
 * [dataTables](https://datatables.net/)
