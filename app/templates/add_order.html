@@ -34,11 +34,11 @@
                     </div>
                 </div>
                 <!-- Right side -->
-                <div class="level-right"> 
+                <div class="level-right">
                 </div>
             </nav>
-
-            <form id="form-orders" name="form-orders">
+            
+            <form id="save-orders" name="save-orders" action="_save_orders" method="POST">
                 {{ form.csrf_token }}
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
@@ -103,7 +103,7 @@
                         <div class="field">
                             <div class="field is-grouped">
                                 <p class="control">
-                                    <button class="button is-primary" id="save-btn" name="save-btn" type="submit">Save</button>
+                                    <button class="button is-primary" id="btn-save" name="btn-save" type="submit">Save</button>
                                 </p>
                                 <p class="control">
                                     <a href="{{ url_for('main.index') }}" class="button is-light">Cancel</a>
@@ -124,6 +124,8 @@
         var ddl_car = $('#car');
         var ddl_model = $('#model');
         var ddl_version = $('#version');
+        var btn_save = $('#save-btn');
+        var form = $('#save-orders');
         var car_id;
         var model_id;
 
@@ -145,19 +147,9 @@
         });
 
         // submit form
-        $('#form-orders').submit(function (e) {
-            $.ajax({
-                type: 'POST',
-                url: $SCRIPT_ROOT + '/_save_orders',
-                data: $(this).serialize(),
-                success: (results) => {
-                    if (results.success) {
-                        console.log('success');
-                    }
-                }
-            });
-            e.preventDefault();
-        });
+        $WS.ajax_form(form);
+
+        $WS.flash_message('Sukma Saputra', 'primary'); // test only
     });
 </script>
 {% endblock %}

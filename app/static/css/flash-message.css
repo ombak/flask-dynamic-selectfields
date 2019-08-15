@@ -1,0 +1,7 @@
+.animated {
+    position: absolute;
+    top:3px;
+    left: 0;
+    width: 100%;
+    z-index: 35;
+}

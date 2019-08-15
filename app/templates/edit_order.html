@@ -38,7 +38,7 @@
                 </div>
             </nav>
 
-            <form id="form-orders" name="form-orders">
+            <form id="edit-form" name="edit" action="_update_orders" method="POST">
                 {{ form.csrf_token }}
                 {{ form.id }}
                 <div class="field is-horizontal">
@@ -104,7 +104,7 @@
                         <div class="field">
                             <div class="field is-grouped">
                                 <p class="control">
-                                    <button class="button is-primary" id="save-btn" name="save-btn" type="submit">Save</button>
+                                    <button class="button is-primary" id="btn-save" name="btn-save" type="submit">Save</button>
                                 </p>
                                 <p class="control">
                                     <a href="{{ url_for('main.index') }}" class="button is-light">Cancel</a>
@@ -125,10 +125,10 @@
         var ddl_car = $('#car');
         var ddl_model = $('#model');
         var ddl_version = $('#version');
+        var form = $('#edit-form');
         var car_id;
         var model_id;
 
-        // $WS.populates(ddl_car);
         // change ddl car result to populate ddl model 
         ddl_car.bind('change', function() {
             car_id = $(this).children('option:selected').val();
@@ -144,19 +144,7 @@
         });
 
         // submit form
-        $('#form-orders').submit(function (e) {
-            $.ajax({
-                type: 'POST',
-                url: $SCRIPT_ROOT + '/_update_orders',
-                data: $(this).serialize(),
-                success: (results) => {
-                    if (results.success) {
-                        console.log('success');
-                    }
-                }
-            });
-            e.preventDefault();
-        });
+        $WS.ajax_form(form);
     });
 </script>
 {% endblock %}
