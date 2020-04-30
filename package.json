@@ -9,6 +9,6 @@
   "dependencies": {
     "bulma": "^0.7.5",
     "datatables": "^1.10.18",
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   }
 }
